@@ -41,37 +41,37 @@ module Caprese
       if @model
         if field
           if i18n_set? "#{i18n_scope}.models.#{@model}.#{field}.#{code}", t
-            I18n.t("#{i18n_scope}.models.#{@model}.#{field}.#{code}", t)
-          elsif i18n_set?("#{i18n_scope}.field.#{code}", t)
-            I18n.t("#{i18n_scope}.field.#{code}", t)
-          elsif i18n_set? "#{i18n_scope}.#{code}", t
-            I18n.t("#{i18n_scope}.#{code}", t)
+            I18n.t("#{i18n_scope}.models.#{@model}.#{field}.#{code}", **t)
+          elsif i18n_set?("#{i18n_scope}.field.#{code}", **t)
+            I18n.t("#{i18n_scope}.field.#{code}", **t)
+          elsif i18n_set? "#{i18n_scope}.#{code}", **t
+            I18n.t("#{i18n_scope}.#{code}", **t)
           else
             code.to_s
           end
         else
           if i18n_set? "#{i18n_scope}.models.#{@model}.#{code}", t
-            I18n.t("#{i18n_scope}.models.#{@model}.#{code}", t)
+            I18n.t("#{i18n_scope}.models.#{@model}.#{code}", **t)
           elsif i18n_set? "#{i18n_scope}.#{code}", t
-            I18n.t("#{i18n_scope}.#{code}", t)
+            I18n.t("#{i18n_scope}.#{code}", **t)
           else
             code.to_s
           end
         end
       elsif @controller && @action
         if field && i18n_set?("#{i18n_scope}.controllers.#{@controller}.#{@action}.#{field}.#{code}", t)
-          I18n.t("#{i18n_scope}.controllers.#{@controller}.#{@action}.#{field}.#{code}", t)
-        elsif i18n_set?("#{i18n_scope}.controllers.#{@controller}.#{@action}.#{code}", t)
-          I18n.t("#{i18n_scope}.controllers.#{@controller}.#{@action}.#{code}", t)
+          I18n.t("#{i18n_scope}.controllers.#{@controller}.#{@action}.#{field}.#{code}", **t)
+        elsif i18n_set?("#{i18n_scope}.controllers.#{@controller}.#{@action}.#{code}", **t)
+          I18n.t("#{i18n_scope}.controllers.#{@controller}.#{@action}.#{code}", **t)
         elsif i18n_set? "#{i18n_scope}.#{code}", t
-          I18n.t("#{i18n_scope}.#{code}", t)
+          I18n.t("#{i18n_scope}.#{code}", **t)
         else
           code.to_s
         end
       elsif field && i18n_set?("#{i18n_scope}.field.#{code}", t)
-        I18n.t("#{i18n_scope}.field.#{code}", t)
+        I18n.t("#{i18n_scope}.field.#{code}", **t)
       elsif i18n_set? "#{i18n_scope}.#{code}", t
-        I18n.t("#{i18n_scope}.#{code}", t)
+        I18n.t("#{i18n_scope}.#{code}", **t)
       else
         code.to_s
       end
@@ -111,7 +111,7 @@ module Caprese
     #   exception we're looking for missing params would cause this to return false improperly
     # @return [Boolean] whether or not the translation exists in I18n
     def i18n_set?(key, params = {})
-      I18n.t key, params, :raise => true rescue false
+      I18n.t(key, raise: true, **params) rescue false
     end
   end
 end

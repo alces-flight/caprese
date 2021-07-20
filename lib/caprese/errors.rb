@@ -46,7 +46,7 @@ module Caprese
     end
 
     def full_message
-      I18n.t("#{i18n_scope}.parameters.not_found", t)
+      I18n.t("#{i18n_scope}.parameters.not_found", **t)
     end
   end
 
@@ -60,7 +60,7 @@ module Caprese
     end
 
     def full_message
-      I18n.t("#{i18n_scope}.parameters.not_found", t)
+      I18n.t("#{i18n_scope}.parameters.not_found", **t)
     end
   end
 
